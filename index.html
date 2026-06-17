@@ -7,7 +7,6 @@
 <title>HV 2026 FC Rheineck</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -74,14 +73,32 @@ body{
 }
 
 .hero-text h1{
-    font-size:38px;
+    font-size:34px;
     font-weight:800;
     line-height:1.1;
-    margin-bottom:6px;
+    margin-bottom:10px;
 }
 
 .hero-text p{
-    font-size:17px;
+    font-size:16px;
+    opacity:0.95;
+    line-height:1.5;
+}
+
+.info-button{
+    width:auto;
+    margin-top:14px;
+    padding:10px 18px;
+    border:none;
+    border-radius:999px;
+    background:#ffffff;
+    color:#163f8f;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.info-button:hover{
     opacity:0.95;
 }
 
@@ -94,6 +111,7 @@ body{
     font-weight:600;
     position:relative;
     z-index:2;
+    line-height:1.5;
 }
 
 .form-card{
@@ -160,6 +178,43 @@ button:hover{
     font-weight:bold;
 }
 
+.popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.popup-content{
+    background:#fff;
+    width:100%;
+    max-width:500px;
+    border-radius:22px;
+    padding:28px;
+    color:#222;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+}
+
+.popup-content h3{
+    color:#163f8f;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.popup-content p{
+    line-height:1.6;
+    font-size:16px;
+}
+
+.close-popup{
+    margin-top:22px;
+    background:#d11d47;
+}
+
 .footer{
     text-align:center;
     margin-top:20px;
@@ -169,21 +224,28 @@ button:hover{
 
 @media(max-width:600px){
 
-.hero-content{
-    align-items:flex-start;
-}
+    body{
+        padding:14px;
+    }
 
-.hero-text h1{
-    font-size:30px;
-}
+    .hero-content{
+        align-items:flex-start;
+    }
 
-.logo{
-    width:60px;
-    height:60px;
-}
+    .hero-text h1{
+        font-size:28px;
+    }
+
+    .logo{
+        width:60px;
+        height:60px;
+    }
+
+    .form-card{
+        padding:22px;
+    }
 
 }
-
 </style>
 </head>
 
@@ -198,14 +260,24 @@ button:hover{
             <img src="logo-fcr.png" class="logo" alt="FC Rheineck">
 
             <div class="hero-text">
-                <h1>HV 2026 FC Rheineck</h1>
-                <p>Freitag, 18. September 2026 im Hotel Hecht in Rheineck</p>
+                <h1>Einladung zur HV 2026 vom FC Rheineck</h1>
+
+                <p>
+                    <strong>Wo:</strong> Hotel Hecht, Rheineck<br>
+                    <strong>Wann:</strong> Freitag, 18.09.2026, 19.30 Uhr
+                </p>
+
+                <button type="button" class="info-button" onclick="openInfo()">
+                    Info zur HV
+                </button>
             </div>
 
         </div>
 
         <div class="hero-info">
-            Bitte bestätige deine Teilnahme an der Hauptversammlung mit dem untenstehenden Formular. Beginn der HV ist um 19.30 Uhr. Das Essen ist vom Verein offeriert, Getränke werden wie immer separat verrechnet.
+            Bitte bestätige deine Teilnahme an der Hauptversammlung mit dem untenstehenden Formular.
+            Beginn der HV ist um 19.30 Uhr. Das Essen ist vom Verein offeriert,
+            Getränke werden wie immer separat verrechnet. Schön, dass du dabei bist!
         </div>
 
     </div>
@@ -253,8 +325,28 @@ button:hover{
 
 </div>
 
-<script>
+<div class="popup" id="infoPopup">
 
+    <div class="popup-content">
+
+        <h3>Info zur HV</h3>
+
+        <p>
+            Unser Verein lebt vom Mitmachen. Deshalb ist die Hauptversammlung für alle
+            aktiven Mitglieder obligatorisch. Neben den wichtigen Informationen gehört
+            auch das gemeinsame Zusammensitzen dazu – und genau das macht den
+            FC Rheineck aus.
+        </p>
+
+        <button type="button" class="close-popup" onclick="closeInfo()">
+            Schliessen
+        </button>
+
+    </div>
+
+</div>
+
+<script>
 const scriptURL = "https://script.google.com/macros/s/AKfycbz5UWUQoCIoBNoGPXNudPa2X6z_W2bFZ4wJ53KMxBYGZG2t0SJsDeQTDh7scC2j9xYyag/exec";
 
 document.getElementById("hvForm").addEventListener("submit", function(e){
@@ -271,7 +363,6 @@ document.getElementById("hvForm").addEventListener("submit", function(e){
     .then(response => {
 
         form.style.display = "none";
-
         document.getElementById("successMessage").style.display = "block";
 
     })
@@ -283,6 +374,23 @@ document.getElementById("hvForm").addEventListener("submit", function(e){
 
 });
 
+function openInfo(){
+    document.getElementById("infoPopup").style.display = "flex";
+}
+
+function closeInfo(){
+    document.getElementById("infoPopup").style.display = "none";
+}
+
+window.addEventListener("click", function(event){
+
+    const popup = document.getElementById("infoPopup");
+
+    if(event.target === popup){
+        closeInfo();
+    }
+
+});
 </script>
 
 </body>
